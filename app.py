@@ -3,6 +3,7 @@ import hashlib
 import os
 import pickle
 import subprocess
+from pathlib import Path
 
 
 import dash
@@ -15,6 +16,7 @@ from dash.exceptions import PreventUpdate
 
 workdir = os.path.join(os.path.dirname(__file__), 'work')
 
+Path(workdir).mkdir(exist_ok=True)
 
 app = dash.Dash(__name__, external_stylesheets=[
     dbc.themes.BOOTSTRAP,
