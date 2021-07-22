@@ -6,7 +6,7 @@ import zipfile
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from fmpy import read_model_description, supported_platforms
-import fmpy
+from fmpy.validation import validate_fmu
 
 
 def process_fmu(fmu_filename):
@@ -101,7 +101,7 @@ def process_fmu(fmu_filename):
     ]
 
     try:
-        problems = fmpy.validation.validate_fmu(fmu_filename)
+        problems = validate_fmu(fmu_filename)
     except Exception as e:
         problems = [str(e)]
 
