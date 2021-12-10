@@ -5,10 +5,7 @@ import pickle
 import subprocess
 from pathlib import Path
 
-
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -18,7 +15,7 @@ workdir = os.path.join(os.path.dirname(__file__), 'work')
 
 Path(workdir).mkdir(exist_ok=True)
 
-app = dash.Dash(__name__, external_stylesheets=[
+app = Dash(__name__, external_stylesheets=[
     dbc.themes.BOOTSTRAP,
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'
 ])
@@ -40,7 +37,7 @@ app.layout = dbc.Container([
             html.H2(
                 [
                     "FMU Check",
-                    html.Span([html.I(className='fas fa-flask mr-2'), "beta"], className='badge badge-secondary ml-3'),
+                    html.Span([html.I(className='fas fa-flask me-2'), "beta"], className='badge badge-secondary ml-3'),
                 ]
                 , className='bd-title'
             ),
@@ -48,7 +45,7 @@ app.layout = dbc.Container([
             html.P("Validate an FMU and get the meta information from the model description", className='bd-lead'),
 
             html.P(
-                html.A([html.I(className='fas fa-info-circle mr-2'), "What is being checked?"], id="what-is-validated-link", style={'color': '#007bff', 'cursor': 'pointer'})
+                html.A([html.I(className='fas fa-info-circle me-2'), "What is being checked?"], id="what-is-validated-link", style={'color': '#007bff', 'cursor': 'pointer'})
             ),
 
             dbc.Collapse(
@@ -79,13 +76,10 @@ app.layout = dbc.Container([
             dbc.InputGroup(
                 [
                     dbc.Input(id='fmu-input', placeholder="Select an FMU", disabled=True),
-                    dbc.InputGroupAddon(
-                        dcc.Upload(dbc.Button("Select",
-                                              color='primary',
-                                              style={'border-top-left-radius': 0, 'border-bottom-left-radius': 0}),
-                        id='fmu-upload', accept='.fmu'),
-                        addon_type="append",
-                    ),
+                    dcc.Upload(dbc.Button("Select",
+                                          color='primary',
+                                          style={'border-top-left-radius': 0, 'border-bottom-left-radius': 0}),
+                    id='fmu-upload', accept='.fmu'),
                 ]
             ),
         ]
@@ -95,7 +89,7 @@ app.layout = dbc.Container([
         [
             dbc.Alert(
                 [
-                    html.I(className="fas fa-thumbs-up mr-3"),
+                    html.I(className="fas fa-thumbs-up me-3"),
                     "By uploading a file you agree that it is stored and processed on our server.",
                 ],
                 id='disclaimer', color='info', className='mt-3', dismissable=True

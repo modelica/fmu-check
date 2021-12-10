@@ -3,7 +3,7 @@ import sys
 import pickle
 import zipfile
 
-import dash_html_components as html
+from dash import html
 import dash_bootstrap_components as dbc
 from fmpy import read_model_description, supported_platforms
 from fmpy.validation import validate_fmu
@@ -19,7 +19,7 @@ def process_fmu(fmu_filename):
         model_description = read_model_description(fmu_filename, validate=False)
     except Exception as e:
         alert = dbc.Alert(
-            [html.I(className='fas fa-times mr-3'), f"Failed to read model description. {e}"],
+            [html.I(className='fas fa-times me-3'), f"Failed to read model description. {e}"],
             id='alert', color='danger', className='mt-3')
         with open(pickle_filename, 'wb') as f:
             pickle.dump([alert], f)
@@ -94,10 +94,6 @@ def process_fmu(fmu_filename):
             dbc.Col(html.Span("File Size"), width=4),
             dbc.Col(html.Span(f'{os.path.getsize(fmu_filename)} bytes'), width=8),
         ], className='py-1'),
-        # dbc.Row([
-        #     dbc.Col(html.Span("Contained Files"), width=4),
-        #     dbc.Col(html.Pre('\n'.join(nl)), width=8),
-        # ], className='py-1'),
     ]
 
     try:
@@ -110,7 +106,7 @@ def process_fmu(fmu_filename):
             [
                 html.P(
                     [
-                        html.I(className='fas fa-exclamation-circle mr-3'),
+                        html.I(className='fas fa-exclamation-circle me-3'),
                         f"Validation failed. {len(problems)} {'problem was' if len(problems) == 1 else 'problems were'} found:"
                     ]
                 ),
@@ -120,7 +116,7 @@ def process_fmu(fmu_filename):
             ],
             id='alert', color='danger', className='mt-3')
     else:
-        alert = dbc.Alert([html.I(className='fas fa-check mr-3'), "Validation passed. No problems found."],
+        alert = dbc.Alert([html.I(className='fas fa-check me-3'), "Validation passed. No problems found."],
                           id='alert', color='success', className='mt-3')
 
     variables = []
@@ -129,7 +125,6 @@ def process_fmu(fmu_filename):
         html.Thead(html.Tr([
             html.Th("Type"),
             html.Th("Name"),
-            # html.Th("Variability"),
             html.Th("Causality"),
             html.Th("Start", className='text-right'),
             html.Th("Unit"),
@@ -160,7 +155,6 @@ def process_fmu(fmu_filename):
                 [
                     html.Td(html.Small(variable.type, style={
                         'color': color, 'border': '1px solid ' + color, 'border-radius': '1em', 'padding': '0 0.5em 0 0.5em',
-                        # 'font-family': 'Georgia, "Times New Roman", Times, serif'
                     })),
                     html.Td(variable.name),
                     # html.Td(variable.variability),
@@ -177,7 +171,6 @@ def process_fmu(fmu_filename):
     tabs = dbc.Tabs(
         [
             dbc.Tab(rows, label="Model Info", className='p-4'),
-            # dbc.Tab(variables, label="Variables", className='p-4'),
             dbc.Tab(table, label="Variables", className='p-4'),
             dbc.Tab(html.Pre('\n'.join(nl)), label="Files", className='p-4'),
         ],
