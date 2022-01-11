@@ -1,2 +1,2 @@
-fmpy[webapp]==0.3.4
+fmpy[webapp]==0.3.5
 gunicorn
