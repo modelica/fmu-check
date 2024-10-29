@@ -27,4 +27,4 @@ gunicorn --bind 0.0.0.0:80 app:app.server
 ## Copyright and License
 
 The code is released under the [2-Clause BSD License](https://opensource.org/licenses/BSD-2-Clause).
-Copyright (C) 2021 the Modelica Association Project FMI.
+Copyright (C) 2024 the Modelica Association Project FMI.
