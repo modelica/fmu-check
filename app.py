@@ -3,6 +3,7 @@ import hashlib
 import os
 import pickle
 import subprocess
+import fmpy
 from pathlib import Path
 
 from dash import Dash, dcc, html
@@ -96,6 +97,18 @@ app.layout = dbc.Container([
             )
         ],
         id='model-info-container'
+    ),
+
+    dbc.Container(
+        [
+            html.P(
+                [
+                    "Fork ", html.A(f"FMU Check", href='https://github.com/modelica/fmu-check', className='link-secondary'), " on GitHub. ",
+                    "Powered by ", html.A(f"FMPy {fmpy.__version__}", href='https://github.com/CATIA-Systems/FMPy', className='link-secondary'), "."
+                ],
+                className='text-body-secondary mt-4'
+            )
+        ],
     )
 
 ])
